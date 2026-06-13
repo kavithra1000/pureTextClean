@@ -14,4 +14,7 @@ if (fs.existsSync('script.js')) {
 if (fs.existsSync('logo.png')) {
   fs.copyFileSync('logo.png', 'dist/logo.png');
 }
+if (fs.existsSync('og-image.png')) {
+  fs.copyFileSync('og-image.png', 'dist/og-image.png');
+}
 console.log('Build completed successfully!');
