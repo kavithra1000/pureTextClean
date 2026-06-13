@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- =====================================================================
+       CONTENT SECURITY POLICY
+       - script-src: same-origin scripts only + Google AdSense/Analytics.
+                     NO eval(), NO CDN Tailwind (already removed).
+       - style-src:  same-origin + Google Fonts (inline styles also needed
+                     for Tailwind utility classes applied via JS classList).
+       - font-src:   Google Fonts CDN.
+       - img-src:    same-origin + data URIs (favicons) + Google ad pixels.
+       - connect-src: same-origin only (no XHR/fetch to external APIs).
+       - frame-src:  Google ad iframes.
+       - object-src: none (block Flash / plugins entirely).
+    ====================================================================== -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src  'self'
+                    https://pagead2.googlesyndication.com
+                    https://www.googletagmanager.com
+                    https://www.google-analytics.com
+                    https://adservice.google.com
+                    https://partner.googleadservices.com;
+        style-src   'self' 'unsafe-inline'
+                    https://fonts.googleapis.com;
+        font-src    'self'
+                    https://fonts.gstatic.com;
+        img-src     'self' data:
+                    https://*.googlesyndication.com
+                    https://*.google.com
+                    https://*.gstatic.com
+                    https://*.doubleclick.net;
+        connect-src 'self'
+                    https://www.google-analytics.com;
+        frame-src   https://googleads.g.doubleclick.net
+                    https://tpc.googlesyndication.com;
+        object-src  'none';
+    " />
+
+    <!-- Primary SEO Meta Tags -->
+    <title>PureText Clean – Free Online Text & List Cleaner</title>
+    <meta name="description"
+        content="PureText Clean – free, private, browser-only text cleaner. Remove duplicates, fix case, strip spaces, convert lists and more. No data ever leaves your device." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://puretextclean.com" />
+
+    <!-- Open Graph / Facebook (Crucial for organic viral clicks) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://puretextclean.com" />
+    <meta property="og:title" content="PureText Clean – Free Online Text & List Cleaner" />
+    <meta property="og:description"
+        content="Instant, secure, browser-only text cleaner. Fix case formatting, sort listings, format arrays, and remove duplicates locally." />
+    <meta property="og:image" content="https://puretextclean.com/og-image.png" />
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://puretextclean.com" />
+    <meta property="twitter:title" content="PureText Clean – Free Online Text & List Cleaner" />
+    <meta property="twitter:description"
+        content="Instant, secure, browser-only text cleaner. Fix case formatting, sort listings, format arrays, and remove duplicates locally." />
+    <meta property="twitter:image" content="https://puretextclean.com/og-image.png" />
+
+    <!-- Google Web Application Schema Markup (Tells Google it's an interactive web app) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PureText Clean",
+      "url": "https://puretextclean.com",
+      "description": "A lightweight, secure, and privacy-focused online toolset for text cleaning, string manipulation, sorting lists, and formatting transformations.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5, JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- =====================================================================
+       TAILWIND CSS (Production — locally built, no CDN)
+  ====================================================================== -->
+    <link rel="stylesheet" href="style.css" />
+
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+            "@type": "Question",
+            "name": "Is PureText Clean safe to use for sensitive data?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. PureText Clean is a browser-only tool. All processing happens locally on your machine via JavaScript, meaning your text is never sent to a server, saved, or exposed."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "How do I remove duplicate lines from a list online?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paste your text into the input field, click the 'Remove Duplicates' button under the List category, and your updated text will instantly appear with all duplicate items removed."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Can I convert a comma-separated list into lines?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. The 'Comma → New Lines' tool splits any comma-separated values into individual lines. You can also reverse the process using the 'Text → Comma List' utility."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Does PureText Clean work offline?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Once the page is loaded in your browser, all text-processing tools work completely offline. No internet connection is required to use any of the tools."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "How do I convert text to title case online?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paste your text in the input box and click 'Title Case' under the Case Transformations section. PureText Clean intelligently skips short conjunctions and prepositions like 'and', 'of', and 'the'."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Can I sort a list alphabetically online for free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Paste your list into the input field and click 'Sort A → Z' or 'Sort Z → A' under the List Ordering section. Each line is treated as one item and sorted instantly."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "How do I strip extra spaces from text?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Use the 'Strip Extra Spaces' button in the Sanitize & Clean section. It collapses multiple consecutive spaces and tabs on each line down to a single space and trims the edges."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Can I URL-encode or HTML-encode text online?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. PureText Clean includes URL Encode, URL Decode, HTML Encode, and HTML Decode tools under the Sanitize & Clean section. All encoding happens locally in your browser."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Is there a keyboard shortcut to search for tools?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Press Ctrl+K (Windows/Linux) or Cmd+K (Mac) to instantly focus the tool search bar. Start typing the tool name and results filter in real time."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Does PureText Clean cost anything?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. PureText Clean is completely free to use with no sign-up, no account, and no limits. The site is supported by non-intrusive Google AdSense advertising."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "What is the CSS padding-x or horizontal padding problem on mobile?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The padding-x problem occurs when layout elements or third-party widgets (like AdSense ads) lack horizontal padding. This causes content to touch screen edges or overflow, leading to unwanted horizontal scrollbars on mobile."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "How can I fix mobile layout overflow issues caused by horizontal padding?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ensure parent containers use responsive padding classes (like px-4 or px-6 in Tailwind). For elements that overflow despite padding, use 'overflow-x-hidden' and ensure box-sizing is set to border-box."
+            }
+            },
+            {
+            "@type": "Question",
+            "name": "Why does standard CSS not recognize padding-x?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Standard CSS does not have a native 'padding-x' property. It is a shorthand concept used in utility frameworks like Tailwind. In vanilla CSS, you must declare padding-left and padding-right separately, or use standard shorthand like 'padding: 0 1rem;'."
+            }
+            }
+        ]
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <!-- =====================================================================
+       CUSTOM CSS (supplemental — Tailwind handles most)
+  ====================================================================== -->
+    <style>
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Textarea resize handle colour */
+        textarea {
+            resize: vertical;
+        }
+
+        /* Smooth modal backdrop */
+        .modal-backdrop {
+            background: rgba(2, 6, 23, 0.80);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Consent banner slide-up */
+        #consent-banner {
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        #consent-banner.hidden-banner {
+            transform: translateY(110%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Button group divider */
+        .btn-group-label {
+            font-size: 0.625rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Ad placeholder */
+        .ad-placeholder {
+            border: 1px dashed #334155;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Focus ring override for textareas */
+        textarea:focus {
+            outline: 2px solid #10b981;
+            outline-offset: 2px;
+        }
+
+        /* Copied feedback transition */
+        .copy-btn {
+            transition: background-color 0.15s, color 0.15s;
+        }
+    </style>
+</head>
+
+<!-- =========================================================================
+     BODY
+========================================================================== -->
+
+<body class="bg-slate-950 text-slate-200 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- ==========================================================================
+     GOOGLE ADSENSE PLACEHOLDER — Replace data-ad-client with your publisher ID
+     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+=========================================================================== -->
+
+    <!-- ============================================================
+     HEADER
+============================================================= -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div class="">
+                <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                    <!-- Shield icon (inline SVG, zero dependency) -->
+                    <svg class="w-5 h-5 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                    PureText Clean
+                </h1>
+                <p class="text-xs text-slate-400 mt-0.5">100% Private — Data Never Leaves Your Browser</p>
+            </div>
+
+
+            <a href="https://www.buymeacoffee.com/" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-600/30 text-amber-400 hover:text-amber-300 transition-colors text-xs font-medium">
+                ☕ Buy Me a Coffee
+            </a>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ============================================================
+     MAIN WORKSPACE
+============================================================= -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex flex-col gap-6">
+
+        <!-- Header Ad Unit -->
+        <div>
+            <p class="text-center text-slate-600 text-[10px] mb-1 tracking-widest uppercase">Advertisement</p>
+            <!-- REPLACE THIS BLOCK with your actual AdSense ad unit code -->
+            <div class="ad-placeholder w-full h-[100px] rounded-xl mx-auto max-w-[728px]">
+                <span class="text-[11px]">AdSense — Display Ad (300×250 / 728×90)</span>
+            </div>
+        </div>
+
+        <!-- Text Panes: two-column on desktop -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+            <!-- ── INPUT PANE ─────────────────────────────────────── -->
+            <section class="flex flex-col gap-2" aria-label="Input text area">
+                <div class="flex items-center justify-between">
+                    <label for="input-text" class="text-sm font-medium text-slate-300">Input Text</label>
+                    <div class="flex gap-2">
+                        <!-- Character count badge -->
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span id="char-count" class="hidden sm:block">0 chars</span>
+                            <span id="line-count" class="hidden sm:block">0 lines</span>
+                            <span id="word-count" class="hidden sm:block">0 words</span>
+                        </div>
+
+                        <!-- Paste button -->
+                        <button id="paste-btn" data-click="paste"
+                            class="text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 transition-colors"
+                            title="Paste from clipboard">
+                            ⌘ Paste
+                        </button>
+                        <!-- Clear button -->
+                        <button id="clear-btn" data-click="clear"
+                            class="text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-rose-900/60 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-700 transition-colors"
+                            title="Clear input">
+                            ✕ Clear
+                        </button>
+                    </div>
+                </div>
+                <textarea id="input-text" placeholder="Paste or type your text here…"
+                    class="w-full min-h-[320px] bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm font-mono text-slate-200 placeholder-slate-600 focus:border-brand-500 transition-colors"
+                    spellcheck="false" autocomplete="off" data-input="stats"></textarea>
+                <!-- Character count badge -->
+                <div class="flex items-center gap-4 text-xs text-slate-500">
+                    <span id="char-count-sm" class=" sm:hidden">0 chars</span>
+                    <span id="line-count-sm" class=" sm:hidden">0 lines</span>
+                    <span id="word-count-sm" class=" sm:hidden">0 words</span>
+                </div>
+            </section>
+
+            <!-- ── OUTPUT PANE ────────────────────────────────────── -->
+            <section class="flex flex-col gap-2" aria-label="Output text area">
+                <div class="flex items-center justify-between">
+                    <label for="output-text" class="text-sm font-medium text-slate-300">Output</label>
+                    <button id="copy-btn" data-click="copy"
+                        class="copy-btn text-xs px-3 py-1.5 rounded-md bg-brand-600 hover:bg-brand-500 text-white border border-brand-700 hover:border-brand-400 transition-colors"
+                        title="Copy output to clipboard">
+                        Copy
+                    </button>
+                </div>
+                <textarea id="output-text" readonly placeholder="Processed text will appear here…"
+                    class="w-full min-h-[320px] bg-slate-900 border border-slate-800 rounded-xl p-4 text-sm font-mono text-slate-200 placeholder-slate-700 cursor-default"
+                    spellcheck="false"></textarea>
+            </section>
+        </div>
+
+        <!-- ── ACTION CONTROL PANEL ───────────────────────────── -->
+        <section aria-label="Text actions" class="bg-slate-900/50 border border-slate-800 rounded-2xl p-5">
+            <h2 class="sr-only">Text Actions</h2>
+
+            <div class="flex flex-col gap-5 p-5">
+
+                <!-- Search Input Bar -->
+                <div class="relative w-full">
+                    <span
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500 text-sm">
+                        🔍
+                    </span>
+                    <input type="text" id="tool-search" data-input="filter"
+                        placeholder="Search tools... (e.g., 'sort', 'remove')"
+                        class="w-full text-xs pl-9 pr-8 py-2 rounded-md bg-slate-950/60 hover:bg-slate-950 text-slate-200 placeholder-slate-500 border border-slate-800 focus:border-slate-600 focus:outline-none focus:ring-1 focus:ring-slate-600 transition-all duration-150" />
+                    <button id="clear-search" data-click="clear-search"
+                        class="hidden absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500 hover:text-slate-300 text-xs transition-colors"
+                        title="Clear search">
+                        ✕
+                    </button>
+                </div>
+
+                <!-- Case Group Section -->
+                <div class="tool-section flex flex-col gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded font-mono">Aa</span>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Case Transformations</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button data-action="uppercase"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">UPPERCASE</button>
+                        <button data-action="lowercase"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">lowercase</button>
+                        <button data-action="titlecase"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Title
+                            Case</button>
+                        <button data-action="sentencecase"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Sentence
+                            case</button>
+                        <button data-action="alternating"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">aLtErNaTiNg</button>
+                    </div>
+                    <div
+                        class="section-divider h-px bg-gradient-to-r from-slate-800 via-slate-800/40 to-transparent mt-2">
+                    </div>
+                </div>
+
+                <!-- List Group Section -->
+                <div class="tool-section flex flex-col gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-sky-500 bg-sky-500/10 px-1.5 py-0.5 rounded font-mono">☰</span>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">List Ordering</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button data-action="removeduplicates"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">✨
+                            Remove Duplicates</button>
+                        <button data-action="tocommalist"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Text
+                            → Comma</button>
+                        <button data-action="commatonewlines"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Comma
+                            → Lines</button>
+                        <button data-action="sortaz"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Sort
+                            A → Z</button>
+                        <button data-action="sortza"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Sort
+                            Z → A</button>
+                        <button data-action="reverseLines"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Reverse
+                            Lines</button>
+                        <button data-action="numberedList"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Numbered
+                            List</button>
+                    </div>
+                    <div
+                        class="section-divider h-px bg-gradient-to-r from-slate-800 via-slate-800/40 to-transparent mt-2">
+                    </div>
+                </div>
+
+                <!-- Clean Group Section -->
+                <div class="tool-section flex flex-col gap-3">
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="text-xs text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded font-mono">🧹</span>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sanitize & Clean</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button data-action="stripspaces"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Strip
+                            Extra Spaces</button>
+                        <button data-action="removelinebreaks"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Remove
+                            Line Breaks</button>
+                        <button data-action="removeemptylines"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Remove
+                            Empty Lines</button>
+                        <button data-action="trimlines"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Trim
+                            Each Line</button>
+                        <button data-action="removenumbers"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Remove
+                            Numbers</button>
+                        <button data-action="removepunctuation"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Remove
+                            Punctuation</button>
+                        <button data-action="removespecialchars"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">Remove
+                            Special Chars</button>
+                        <button data-action="htmlencode"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">HTML
+                            Encode</button>
+                        <button data-action="htmldecode"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">HTML
+                            Decode</button>
+                        <button data-action="urlencode"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">URL
+                            Encode</button>
+                        <button data-action="urldecode"
+                            class="tool-btn text-xs px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-500 transition-all duration-150 shadow-sm">URL
+                            Decode</button>
+                    </div>
+                </div>
+
+                <!-- No Results Feedback State -->
+                <div id="no-results-msg" class="hidden text-center py-6 text-xs text-slate-500 font-medium">
+                    No tools match your search.
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <!-- ── SIDEBAR / BOTTOM AD UNIT ───────────────────────── -->
+        <div>
+            <p class="text-center text-slate-600 text-[10px] mb-1 tracking-widest uppercase">Advertisement</p>
+            <!-- REPLACE THIS BLOCK with your actual AdSense ad unit code -->
+            <div class="ad-placeholder w-full h-[100px] rounded-xl mx-auto max-w-[728px]">
+                <span class="text-[11px]">AdSense — Display Ad (300×250 / 728×90)</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ============================================================
+     FAQ 
+============================================================= -->
+    <section class="max-w-7xl w-full mx-auto pt-8 px-4">
+        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Frequently Asked Questions</h2>
+
+        <div class="flex flex-col gap-3">
+
+            <!-- FAQ 1 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Is PureText Clean safe to use for sensitive data?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes. PureText Clean is a browser-only tool. All processing happens locally on your machine via JavaScript — your text is never sent to a server, saved, or exposed to anyone.
+                </div>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>How do I remove duplicate lines from a list online?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Paste your text into the input field and click <strong class="text-slate-300">Remove Duplicates</strong> under the List Ordering section. All repeated lines are removed instantly, keeping the first occurrence.
+                </div>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Can I convert a comma-separated list into separate lines?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes. The <strong class="text-slate-300">Comma → Lines</strong> tool splits any comma-separated values into individual lines. You can also do the reverse with <strong class="text-slate-300">Text → Comma</strong>.
+                </div>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Does PureText Clean work offline?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes. Once the page loads, every tool runs entirely in your browser. You can disconnect from the internet and all features continue working without interruption.
+                </div>
+            </details>
+
+            <!-- FAQ 5 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>How do I convert text to Title Case?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Paste your text and click <strong class="text-slate-300">Title Case</strong> under Case Transformations. PureText Clean intelligently skips short conjunctions and prepositions like "and", "of", and "the" so your output looks professionally formatted.
+                </div>
+            </details>
+
+            <!-- FAQ 6 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Can I sort a list alphabetically for free?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes, completely free. Paste your list and click <strong class="text-slate-300">Sort A → Z</strong> or <strong class="text-slate-300">Sort Z → A</strong>. Each line is treated as one item and sorted instantly with no limit on list size.
+                </div>
+            </details>
+
+            <!-- FAQ 7 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>How do I strip extra spaces and blank lines from text?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Use <strong class="text-slate-300">Strip Extra Spaces</strong> to collapse multiple spaces into one per line, and <strong class="text-slate-300">Remove Empty Lines</strong> to delete blank rows. You can apply both in sequence for a fully clean result.
+                </div>
+            </details>
+
+            <!-- FAQ 8 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Can I URL-encode or HTML-encode text?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes. The Sanitize &amp; Clean section includes <strong class="text-slate-300">URL Encode</strong>, <strong class="text-slate-300">URL Decode</strong>, <strong class="text-slate-300">HTML Encode</strong>, and <strong class="text-slate-300">HTML Decode</strong> — all processed locally in your browser.
+                </div>
+            </details>
+
+            <!-- FAQ 9 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Is there a keyboard shortcut to search for tools?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes! Press <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-600 text-slate-300 font-mono text-[10px]">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-600 text-slate-300 font-mono text-[10px]">K</kbd> (or <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-600 text-slate-300 font-mono text-[10px]">⌘K</kbd> on Mac) to jump straight to the search bar. Start typing and tools filter in real time.
+                </div>
+            </details>
+
+            <!-- FAQ 10 -->
+            <details class="group bg-slate-900/40 border border-slate-800/60 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                <summary class="flex justify-between items-center p-4 text-xs font-semibold text-slate-300 hover:text-white cursor-pointer select-none transition-colors">
+                    <span>Is PureText Clean completely free?</span>
+                    <span class="text-slate-500 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div class="px-4 pb-4 text-xs text-slate-400 leading-relaxed border-t border-slate-800/40 pt-3">
+                    Yes, 100% free — no sign-up, no account, no limits. The site is supported by non-intrusive Google AdSense advertising. If you find it useful, you can also <a href="https://www.buymeacoffee.com/" target="_blank" rel="noopener noreferrer" class="text-brand-400 hover:text-brand-300 underline">buy us a coffee ☕</a>.
+                </div>
+            </details>
+
+        </div>
+
+        <!-- FAQ Ad Unit -->
+        <div class="py-6">
+            <p class="text-center text-slate-600 text-[10px] mb-1 tracking-widest uppercase">Advertisement</p>
+            <!-- REPLACE THIS BLOCK with your actual AdSense ad unit code -->
+            <div class="ad-placeholder w-full h-[100px] rounded-xl mx-auto max-w-[728px]">
+                <span class="text-[11px]">AdSense — Display Ad (300×250 / 728×90)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+     FOOTER
+============================================================= -->
+    <footer class="border-t border-slate-800 bg-slate-900/60 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>© <span id="footer-year"></span> PureText Clean. All rights reserved.</p>
+            <nav class="flex flex-wrap justify-center gap-x-4 gap-y-1" aria-label="Legal links">
+                <button data-modal="privacy" class="footer-link">Privacy Policy</button>
+                <button data-modal="terms" class="footer-link">Terms of Service</button>
+                <button data-modal="cookies" class="footer-link">Cookie Policy</button>
+                <button data-modal="contact" class="footer-link">About / Contact</button>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+     COOKIE / PRIVACY CONSENT BANNER (GDPR + CCPA)
+============================================================= -->
+    <div id="consent-banner" role="dialog" aria-modal="false" aria-label="Cookie and privacy consent"
+        class="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 bg-slate-900 border-t border-slate-700 shadow-2xl">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="flex-1 text-sm text-slate-300 leading-relaxed">
+                <p class="font-semibold text-white mb-1">🍪 We use cookies & advertising</p>
+                <p class="text-slate-400 text-xs">
+                    We and our partners (including <strong class="text-slate-300">Google</strong>) use cookies and
+                    similar technologies to serve personalised advertisements based on your prior visits to this and
+                    other sites.
+                    Google's use of advertising cookies enables it and its partners to serve ads based on your visit
+                    here and elsewhere on the Internet.
+                    You may opt out of personalised advertising by visiting
+                    <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer"
+                        class="text-brand-400 underline hover:text-brand-300">Google Ads Settings</a>.
+                    By clicking <strong class="text-slate-200">Accept All</strong> you consent to our use of cookies as
+                    described in our
+                    <button data-modal="cookies" data-close-banner
+                        class="text-brand-400 underline hover:text-brand-300">Cookie Policy</button>
+                    and
+                    <button data-modal="privacy" data-close-banner
+                        class="text-brand-400 underline hover:text-brand-300">Privacy Policy</button>.
+                    California residents: see our CCPA rights section in the Privacy Policy.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2 shrink-0 w-full sm:w-auto">
+                <button data-consent="essential"
+                    class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-600 text-xs font-medium transition-colors">
+                    Reject Non-Essential
+                </button>
+                <button data-modal="cookies"
+                    class="px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white border border-slate-600 text-xs font-medium transition-colors">
+                    Manage Settings
+                </button>
+                <button data-consent="all"
+                    class="px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white border border-brand-700 text-xs font-semibold transition-colors">
+                    Accept All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     MODAL OVERLAY (shared)
+============================================================= -->
+    <div id="modal-overlay" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4"
+        role="dialog" aria-modal="true" aria-labelledby="modal-title" >
+        <div
+            class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col animate-slide-up shadow-2xl">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 shrink-0">
+                <h2 id="modal-title" class="text-base font-semibold text-white"></h2>
+                <button data-click="close-modal"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors text-lg leading-none"
+                    aria-label="Close">×</button>
+            </div>
+            <!-- Modal Body (scrollable) -->
+            <div id="modal-body" class="overflow-y-auto px-6 py-5 text-sm text-slate-300 leading-relaxed prose-custom">
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     COMPONENT STYLES (plain CSS — @apply removed, build-step free)
+============================================================= -->
+    <style>
+        .action-btn {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .action-btn:hover {
+            background-color: #334155;
+            color: #34d399;
+            border-color: #059669;
+        }
+
+        .footer-link {
+            transition: color 0.15s;
+            text-underline-offset: 2px;
+        }
+        .footer-link:hover {
+            color: #34d399;
+            text-decoration: underline;
+        }
+
+        /* prose-custom: styles for modal long-form text */
+        .prose-custom h3 {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .prose-custom p {
+            margin-bottom: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .prose-custom ul {
+            list-style-type: disc;
+            list-style-position: inside;
+            margin-bottom: 0.75rem;
+            color: #94a3b8;
+        }
+        .prose-custom ul li + li {
+            margin-top: 0.25rem;
+        }
+
+        .prose-custom a {
+            color: #34d399;
+            text-decoration: underline;
+        }
+        .prose-custom a:hover {
+            color: #6ee7b7;
+        }
+
+        .prose-custom strong {
+            color: #e2e8f0;
+        }
+    </style>
+
+    <!-- ============================================================
+     JAVASCRIPT (external — CSP-compliant, script-src 'self')
+============================================================= -->
+    <script src="script.js" defer></script>
+
+</body>
+
+</html>

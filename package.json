@@ -1,0 +1,19 @@
+{
+  "name": "puretext",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./tailwind.input.css -o ./style.css --minify --content ./index.html",
+    "watch": "tailwindcss -i ./tailwind.input.css -o ./style.css --watch --content ./index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.1",
+    "tailwindcss": "^4.3.1"
+  }
+}
