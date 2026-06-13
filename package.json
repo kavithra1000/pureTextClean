@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "mkdir -p dist && tailwindcss -i ./tailwind.input.css -o ./dist/style.css --minify --content ./index.html && cp index.html ./dist/ && (cp script.js ./dist/ 2>/dev/null || true)",
+    "build": "tailwindcss -i ./tailwind.input.css -o ./dist/style.css --minify --content ./index.html && node build.js",
     "watch": "tailwindcss -i ./tailwind.input.css -o ./style.css --watch --content ./index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
