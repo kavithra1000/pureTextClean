@@ -20,7 +20,11 @@ if (fs.existsSync('og-image.png')) {
 if (fs.existsSync('robots.txt')) {
   fs.copyFileSync('robots.txt', 'dist/robots.txt');
 }
+if (fs.existsSync('sitemap.xml')) {
+  fs.copyFileSync('sitemap.xml', 'dist/sitemap.xml');
+}
 if (fs.existsSync('favicon.ico')) {
   fs.copyFileSync('favicon.ico', 'dist/favicon.ico');
 }
 console.log('Build completed successfully!');
+
